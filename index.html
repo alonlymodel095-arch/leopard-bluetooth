@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Leopard Bluetooth Products</title>
+<title>Bluetooth Products</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body{font-family:Arial,sans-serif;background:#f2f2f2;margin:0;padding:0;}
@@ -17,22 +17,22 @@ body{font-family:Arial,sans-serif;background:#f2f2f2;margin:0;padding:0;}
 </style>
 </head>
 <body>
-<div class="header"><h1>Leopard Bluetooth Products</h1></div>
+<div class="header"><h1>Bluetooth Products</h1></div>
 <div class="products">
 <script>
-for(let i=1;i<=21;i++){
+for(let i=12;i<=41;i++){ // images (12).jpeg → images (41).jpeg
   document.write(`<div class="product">
-    <img src="images/bluetooth${i}.png" alt="Bluetooth ${i}">
-    <h3>Bluetooth ${i}</h3>
+    <img src="images%20(${i}).jpeg" alt="Product ${i}">
+    <h3>Product ${i-11}</h3>
     <p>Price: ₹100</p>
     <button class="buyBtn" onclick="selectProduct(${i})">Buy Now</button>
   </div>`);
 }
 function selectProduct(i){
   localStorage.setItem("checkoutData", JSON.stringify({
-      productImg:`images/bluetooth${i}.png`,
-      productName:`Bluetooth ${i}`,
-      productIndex:i // for QR mapping
+      productImg:`images%20(${i}).jpeg`,
+      productName:`Product ${i-11}`,
+      productIndex:i
   }));
   window.location.href="checkout.html";
 }
