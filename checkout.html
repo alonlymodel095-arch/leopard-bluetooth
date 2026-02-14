@@ -4,45 +4,73 @@
 <title>Checkout - Leopard Bluetooth</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{font-family:Arial; background:#f2f2f2; margin:0; padding:0;}
+body{font-family:Arial, sans-serif; background:#f2f2f2; margin:0; padding:0;}
 .container{
-    max-width:500px; margin:50px auto; background:white; padding:20px; border-radius:12px;
+    max-width:500px; margin:30px auto; background:white; padding:20px; border-radius:12px;
     box-shadow:0 4px 15px rgba(0,0,0,0.2);
 }
 h2{text-align:center; margin-bottom:20px;}
-.detail{font-size:16px; margin:10px 0;}
-.total{font-weight:bold; font-size:18px; margin-top:15px;}
-button{width:100%; padding:12px; background:black; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; margin-top:20px;}
-label{display:block; margin-top:15px;}
-select{width:100%; padding:10px; margin-top:5px; border-radius:8px; font-size:16px;}
-.qr{margin-top:10px; text-align:center;}
+label{display:block; margin-top:15px; font-weight:bold;}
+input, select{width:100%; padding:10px; margin-top:5px; border-radius:8px; font-size:16px;}
+.qr{margin-top:15px; text-align:center;}
 .qr img{width:80%;}
+button{
+    width:100%; padding:12px; background:gray; color:white; border:none; border-radius:8px;
+    font-size:16px; cursor:not-allowed; margin-top:20px;
+}
+button.active{background:black; cursor:pointer;}
+.total{font-weight:bold; font-size:16px; margin-top:10px;}
 </style>
 </head>
 <body>
 
 <div class="container">
 <h2>Checkout</h2>
-<div class="detail" id="productPrice">Product Price: ₹100</div>
-<div class="detail" id="packing">Packing Charges: ₹40 (Online Mandatory)</div>
-<div class="detail">Choose Payment Option:</div>
+
+<!-- User Details -->
+<label>Name:</label>
+<input type="text" id="userName" placeholder="Enter your name">
+
+<label>Phone Number:</label>
+<input type="text" id="userPhone" placeholder="Enter your phone number">
+
+<label>Email:</label>
+<input type="text" id="userEmail" placeholder="Enter your email">
+
+<!-- Payment Option -->
+<label>Choose Payment Option:</label>
 <select id="paymentOption" onchange="updatePayment()">
-    <option value="cod">COD ₹100 + Packing ₹40 Online</option>
-    <option value="fullOnline">Full Online ₹140</option>
+    <option value="cod">COD ₹60 + Packing ₹40 Online</option>
+    <option value="fullOnline">Full Online ₹100</option>
 </select>
 
+<!-- QR -->
 <div class="qr" id="qrContainer">
     <!-- QR will appear here -->
 </div>
 
-<div class="total" id="totalAmount">Total Amount: ₹140</div>
+<!-- TID -->
+<label>Enter Transaction ID (TID) after payment:</label>
+<input type="text" id="tidInput" placeholder="Enter Transaction ID">
 
-<button onclick="confirmOrder()">Confirm Order</button>
+<!-- Total -->
+<div class="total" id="totalAmount">Total Amount: ₹100</div>
+
+<!-- Confirm -->
+<button id="confirmBtn" onclick="confirmOrder()">Confirm Order</button>
+
 </div>
 
 <script>
 // QR file
 const qrImage = "images/IMG_20260214_075835_541.png";
+const confirmBtn = document.getElementById("confirmBtn");
+
+// User fields
+const userName = document.getElementById("userName");
+const userPhone = document.getElementById("userPhone");
+const userEmail = document.getElementById("userEmail");
+const tidInput = document.getElementById("tidInput");
 
 function updatePayment(){
     const option = document.getElementById("paymentOption").value;
@@ -51,24 +79,56 @@ function updatePayment(){
 
     if(option === "cod"){
         qrDiv.innerHTML = `<p>Scan QR to pay ₹40 Online Packing</p><img src="${qrImage}" alt="QR">`;
-        totalDiv.innerText = "Total COD Amount: ₹100 (Packing ₹40 paid online)";
+        totalDiv.innerText = "COD Amount: ₹60 + Packing ₹40 Paid Online";
     } else{
-        qrDiv.innerHTML = `<p>Scan QR to pay ₹140 Full Online Payment</p><img src="${qrImage}" alt="QR">`;
-        totalDiv.innerText = "Total Online Payment: ₹140";
+        qrDiv.innerHTML = `<p>Scan QR to pay ₹100 Full Online</p><img src="${qrImage}" alt="QR">`;
+        totalDiv.innerText = "Total Online Payment: ₹100";
+    }
+    checkAllFields();
+}
+
+// Enable confirm button only if all fields + TID filled
+function checkAllFields(){
+    if(userName.value.trim() && userPhone.value.trim() && userEmail.value.trim() && tidInput.value.trim()){
+        confirmBtn.classList.add("active");
+        confirmBtn.disabled = false;
+        confirmBtn.style.cursor = "pointer";
+    } else{
+        confirmBtn.classList.remove("active");
+        confirmBtn.disabled = true;
+        confirmBtn.style.cursor = "not-allowed";
     }
 }
 
+// Add listeners
+[userName,userPhone,userEmail,tidInput].forEach(el=> el.addEventListener("input", checkAllFields));
+
 // Initialize
 updatePayment();
+checkAllFields();
 
 // Confirm Order
 function confirmOrder(){
     const option = document.getElementById("paymentOption").value;
-    if(option === "cod"){
-        alert("✅ Order Confirmed! Pay ₹100 on Delivery. ₹40 Packing paid online.");
-    } else{
-        alert("✅ Order Confirmed! Total ₹140 paid online.");
+    const name = userName.value.trim();
+    const phone = userPhone.value.trim();
+    const email = userEmail.value.trim();
+    const tid = tidInput.value.trim();
+
+    if(!name || !phone || !email || !tid){
+        alert("❌ Please fill all details and enter Transaction ID.");
+        return;
     }
+
+    let message = `✅ Order Confirmed!\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nTransaction ID: ${tid}\n`;
+
+    if(option === "cod"){
+        message += "Payment: COD ₹60 + Packing ₹40 Paid Online";
+    } else{
+        message += "Payment: Full Online ₹100 Paid";
+    }
+
+    alert(message);
     window.location.href = "index.html";
 }
 </script>
