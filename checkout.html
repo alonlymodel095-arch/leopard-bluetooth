@@ -4,57 +4,72 @@
 <title>Checkout - Leopard Bluetooth</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{
-    font-family: Arial, sans-serif;
-    background: #f2f2f2;
-    margin:0;
-    padding:0;
-}
+body{font-family:Arial; background:#f2f2f2; margin:0; padding:0;}
 .container{
-    max-width: 500px;
-    margin: 50px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    max-width:500px; margin:50px auto; background:white; padding:20px; border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
 }
 h2{text-align:center; margin-bottom:20px;}
 .detail{font-size:16px; margin:10px 0;}
 .total{font-weight:bold; font-size:18px; margin-top:15px;}
-button{
-    width:100%;
-    padding:12px;
-    background:black;
-    color:white;
-    border:none;
-    border-radius:8px;
-    font-size:16px;
-    cursor:pointer;
-    margin-top:20px;
-}
-.reminder{
-    color:red;
-    font-size:14px;
-    margin-top:10px;
-    text-align:center;
-}
+button{width:100%; padding:12px; background:black; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; margin-top:20px;}
+label{display:block; margin-top:15px;}
+select{width:100%; padding:10px; margin-top:5px; border-radius:8px; font-size:16px;}
+.qr{margin-top:10px; text-align:center;}
+.qr img{width:80%;}
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Checkout</h2>
-    <div class="detail">Packing Charges Paid Online (QR): ₹40</div>
-    <div class="detail">Product Price (Cash on Delivery): ₹100</div>
-    <div class="total">Total COD Amount: ₹100</div>
-    <div class="reminder">Scan QR for ₹40 Online Payment before confirming order</div>
-    <button onclick="confirmOrder()">Confirm Order (COD)</button>
+<h2>Checkout</h2>
+<div class="detail" id="productPrice">Product Price: ₹100</div>
+<div class="detail" id="packing">Packing Charges: ₹40 (Online Mandatory)</div>
+<div class="detail">Choose Payment Option:</div>
+<select id="paymentOption" onchange="updatePayment()">
+    <option value="cod">COD ₹100 + Packing ₹40 Online</option>
+    <option value="fullOnline">Full Online ₹140</option>
+</select>
+
+<div class="qr" id="qrContainer">
+    <!-- QR will appear here -->
+</div>
+
+<div class="total" id="totalAmount">Total Amount: ₹140</div>
+
+<button onclick="confirmOrder()">Confirm Order</button>
 </div>
 
 <script>
+// QR file
+const qrImage = "images/IMG_20260214_075835_541.png";
+
+function updatePayment(){
+    const option = document.getElementById("paymentOption").value;
+    const qrDiv = document.getElementById("qrContainer");
+    const totalDiv = document.getElementById("totalAmount");
+
+    if(option === "cod"){
+        qrDiv.innerHTML = `<p>Scan QR to pay ₹40 Online Packing</p><img src="${qrImage}" alt="QR">`;
+        totalDiv.innerText = "Total COD Amount: ₹100 (Packing ₹40 paid online)";
+    } else{
+        qrDiv.innerHTML = `<p>Scan QR to pay ₹140 Full Online Payment</p><img src="${qrImage}" alt="QR">`;
+        totalDiv.innerText = "Total Online Payment: ₹140";
+    }
+}
+
+// Initialize
+updatePayment();
+
+// Confirm Order
 function confirmOrder(){
-    alert("✅ Order Confirmed! Pay ₹100 on Delivery.");
-    window.location.href = "index.html"; // Redirect back to products page
+    const option = document.getElementById("paymentOption").value;
+    if(option === "cod"){
+        alert("✅ Order Confirmed! Pay ₹100 on Delivery. ₹40 Packing paid online.");
+    } else{
+        alert("✅ Order Confirmed! Total ₹140 paid online.");
+    }
+    window.location.href = "index.html";
 }
 </script>
 
