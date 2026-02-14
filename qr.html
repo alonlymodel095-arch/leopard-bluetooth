@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Scan QR to Pay</title>
+<title>Enter UPI Payment</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body{font-family:Arial,sans-serif;background:#f2f2f2;text-align:center;padding:30px;}
-#qrContainer{background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.2);display:inline-block;}
-#qrContainer img{width:80%;max-width:250px;margin-top:10px;border-radius:12px;}
+#container{background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.2);display:inline-block;}
 ul{text-align:left; max-width:300px; margin:10px auto; color:#555;}
 input{width:80%;padding:10px;margin-top:10px;border-radius:8px;border:1px solid #ccc;}
 button{margin-top:15px;padding:10px 20px;background:#000;color:white;border:none;border-radius:8px;cursor:pointer;}
@@ -14,8 +13,14 @@ button:hover{background:#222;}
 </style>
 </head>
 <body>
-<h2>Scan & Pay</h2>
-<div id="qrContainer"></div>
+<h2>Enter UPI Payment</h2>
+<div id="container">
+<p style="font-weight:bold;">Pay for your product</p>
+<p style="font-weight:bold; color:#333; margin-top:15px;">Payment Options:</p>
+<ul>
+<li>Pay ₹100 online → Full payment, no COD required.</li>
+<li>Pay ₹40 online → Packing charge for COD delivery. Remaining ₹60 to pay on delivery.</li>
+</ul>
 
 <label>Enter your UPI ID</label>
 <input type="text" id="upi" placeholder="Ex: shivam@upi">
@@ -24,23 +29,11 @@ button:hover{background:#222;}
 <input type="text" id="tid" placeholder="Transaction ID">
 <br>
 <button onclick="confirmOrder()">Confirm Payment</button>
+</div>
 
 <script>
 // Get product info from checkout
 const data=JSON.parse(localStorage.getItem("checkoutData") || '{}');
-
-// QR image path
-const qrImage="images/qr.png"; // Ensure file exists here
-
-const qrDiv=document.getElementById("qrContainer");
-qrDiv.innerHTML=`<p style="font-weight:bold;">Pay for ${data.productName || 'your product'}</p>
-<img src="${qrImage}" alt="UPI QR" onerror="this.onerror=null;this.src='images/qr.png';">
-<p style="font-weight:bold; color:#333; margin-top:15px;">Payment Options:</p>
-<ul>
-<li>Pay ₹100 online → Full payment, no COD required.</li>
-<li>Pay ₹40 online → Packing charge for COD delivery. Remaining ₹60 to pay on delivery.</li>
-</ul>`;
-
 
 function confirmOrder(){
   const tid=document.getElementById("tid").value.trim();
