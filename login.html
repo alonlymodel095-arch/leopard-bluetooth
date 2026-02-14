@@ -13,7 +13,6 @@ body{
     height: 100vh;
     margin: 0;
 }
-
 .login-box{
     background: white;
     padding: 30px;
@@ -22,12 +21,7 @@ body{
     width: 90%;
     max-width: 400px;
 }
-
-h2{
-    text-align: center;
-    margin-bottom: 20px;
-}
-
+h2{text-align:center; margin-bottom:20px;}
 input{
     width: 100%;
     padding: 12px;
@@ -36,7 +30,6 @@ input{
     border: 1px solid #ccc;
     font-size: 16px;
 }
-
 button{
     width: 100%;
     padding: 12px;
@@ -46,7 +39,9 @@ button{
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
+    margin-top:10px;
 }
+#cashfreeFields{display:none;}
 </style>
 </head>
 <body>
@@ -55,19 +50,42 @@ button{
     <h2>Login</h2>
     <input type="text" id="username" placeholder="Username" required>
     <input type="password" id="password" placeholder="Password" required>
-    <button onclick="loginCheck()">Login</button>
+    <button onclick="checkLogin()">Login</button>
+
+    <div id="cashfreeFields">
+        <h3 style="text-align:center;">CashFree Settings</h3>
+        <input type="text" id="appId" placeholder="Enter CashFree App ID">
+        <input type="text" id="secretKey" placeholder="Enter CashFree Secret Key">
+        <button onclick="saveCashFree()">Save & Continue</button>
+    </div>
 </div>
 
 <script>
-function loginCheck(){
+function checkLogin(){
     const user = document.getElementById("username").value.trim();
     const pass = document.getElementById("password").value.trim();
 
-    // Change these credentials if needed
+    // Hardcoded credentials
     if(user === "admin" && pass === "1234"){
-        window.location.href = "index.html"; // Successful login → index.html
-    } else {
+        // Show CashFree fields after successful login
+        document.getElementById("cashfreeFields").style.display = "block";
+    } else{
         alert("Invalid Username or Password");
+    }
+}
+
+function saveCashFree(){
+    const appId = document.getElementById("appId").value.trim();
+    const secret = document.getElementById("secretKey").value.trim();
+
+    if(appId && secret){
+        localStorage.setItem("cashfreeAppId", appId);
+        localStorage.setItem("cashfreeSecret", secret);
+        alert("CashFree App ID & Secret Key saved!");
+        // Redirect to products page
+        window.location.href = "index.html";
+    } else{
+        alert("Please enter both App ID and Secret Key");
     }
 }
 </script>
