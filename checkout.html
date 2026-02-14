@@ -1,12 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Checkout</title>
+    <title>Secure Checkout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 380px;
+            margin: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .price-box {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            background: black;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .success {
+            display: none;
+            text-align: center;
+            color: green;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
 </head>
+
 <body>
-  <h2>Checkout</h2>
-  <p>Payment options: COD / Online</p>
-  <p>Packaging charge: ₹45</p>
-  <button>Pay Now</button>
+
+<div class="box">
+
+    <h2>Secure Checkout</h2>
+
+    <div class="price-box">
+        <p>Product Price: ₹100</p>
+        <p>Packing Charge: ₹40</p>
+        <p class="total">Total Payable: ₹140</p>
+    </div>
+
+    <form onsubmit="placeOrder(event)">
+        <input type="text" placeholder="Full Name" required>
+        <textarea placeholder="Full Address" required></textarea>
+        <input type="tel" placeholder="Mobile Number" required>
+
+        <button type="submit">Place Order</button>
+    </form>
+
+    <div class="success" id="successMsg">
+        ✅ Order Placed Successfully!
+    </div>
+
+</div>
+
+<script>
+function placeOrder(event){
+    event.preventDefault();
+    document.getElementById("successMsg").style.display = "block";
+}
+</script>
+
 </body>
 </html>
