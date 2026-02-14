@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Enter Transaction ID</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Arial,sans-serif;background:#f2f2f2;text-align:center;padding:30px;}
+#container{background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.2);display:inline-block;}
+input{width:80%;padding:10px;margin-top:10px;border-radius:8px;border:1px solid #ccc;}
+button{margin-top:15px;padding:10px 20px;background:#000;color:white;border:none;border-radius:8px;cursor:pointer;}
+button:hover{background:#222;}
+ul{text-align:left; max-width:300px; margin:10px auto; color:#555;}
+</style>
+</head>
+<body>
+<h2>Enter Transaction ID</h2>
+<div id="container">
+<p style="font-weight:bold;">Enter TID after payment is done via your UPI app</p>
+<input type="text" id="tid" placeholder="Transaction ID (10 digits)">
+<br>
+<button onclick="confirmOrder()">Confirm Order</button>
+</div>
+
+<script>
+function confirmOrder(){
+  const tid=document.getElementById("tid").value.trim();
+  const upi=localStorage.getItem("userUPI") || '';
+
+  if(upi.length<3){ alert("UPI ID missing! Go back."); return; }
+  if(tid.length!==10){ alert("Enter valid 10 digit TID"); return; }
+
+  let amount=prompt("Enter amount paid online: 100 for full payment, 40 for COD packing");
+  if(amount!="100" && amount!="40"){ alert("Invalid amount entered"); return; }
+
+  const orderData = {
+    productName: 'Your Product',
+    name: 'Customer',
+    upiID: upi,
+    tid: tid,
+    paidAmount: amount,
+    date: new Date().toLocaleString()
+  };
+
+  localStorage.setItem("lastOrder", JSON.stringify(orderData));
+
+  if(amount=="100"){
+    alert(`Order Fully Paid!\nUPI: ${upi}\nTID: ${tid}`);
+  } else {
+    alert(`COD Order Confirmed!\n₹40 paid online (packing), ₹60 on delivery\nUPI: ${upi}\nTID: ${tid}`);
+  }
+
+  localStorage.removeItem("userUPI");
+  window.location.href="index.html";
+}
+</script>
+</body>
+</html>
