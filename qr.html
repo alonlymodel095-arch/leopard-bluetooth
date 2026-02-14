@@ -7,31 +7,60 @@
 body{font-family:Arial,sans-serif;background:#f2f2f2;text-align:center;padding:30px;}
 #qrContainer{background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.2);display:inline-block;}
 #qrContainer img{width:80%;max-width:250px;margin-top:10px;border-radius:12px;}
+ul{text-align:left; max-width:300px; margin:10px auto; color:#555;}
 input{width:80%;padding:10px;margin-top:15px;border-radius:8px;border:1px solid #ccc;}
 button{margin-top:15px;padding:10px 20px;background:#000;color:white;border:none;border-radius:8px;cursor:pointer;}
 button:hover{background:#222;}
 </style>
 </head>
 <body>
-<h2>Scan & Pay ₹40</h2>
+<h2>Scan & Pay</h2>
 <div id="qrContainer"></div>
+
 <label>Enter Transaction ID (10 digits)</label>
 <input type="text" id="tid" placeholder="Transaction ID">
 <br>
 <button onclick="confirmOrder()">Confirm Payment</button>
 
 <script>
+// Get product info from checkout
 const data=JSON.parse(localStorage.getItem("checkoutData"));
-const qrImage="images/upi_1771095824230~2.png"; // Fixed QR
+
+// Use safe QR file name (rename if needed)
+const qrImage="images/upi_1771095824230~2.png"; // Make sure file exists in images/ folder
 
 const qrDiv=document.getElementById("qrContainer");
-qrDiv.innerHTML=`<p>Pay ₹40 for ${data.productName}</p>
-<img src="${qrImage}" alt="UPI QR">`;
+qrDiv.innerHTML=`<p style="font-weight:bold;">Pay for ${data.productName}</p>
+<img src="${qrImage}" alt="UPI QR" onerror="this.onerror=null;this.src='images/qr.png';">
+<p style="font-weight:bold; color:#333; margin-top:15px;">Payment Options:</p>
+<ul>
+<li>Pay ₹100 online → Full payment, no COD required.</li>
+<li>Pay ₹40 online → Packing charge for COD delivery. Remaining ₹60 to pay on delivery.</li>
+</ul>`;
 
 function confirmOrder(){
   const tid=document.getElementById("tid").value.trim();
-  if(tid.length!==10){alert("Enter valid 10 digit TID");return;}
-  alert(`Order Confirmed for ${data.productName}\nTID: ${tid}\nThank you, ${data.name}!`);
+  if(tid.length!==10){ alert("Enter valid 10 digit TID"); return; }
+
+  let amount=prompt("Enter amount paid online: 100 for full payment, 40 for COD packing");
+  if(amount!="100" && amount!="40"){ alert("Invalid amount entered"); return; }
+
+  // Save order info
+  const orderData = {
+    productName:data.productName,
+    name:data.name,
+    tid:tid,
+    paidAmount:amount,
+    date:new Date().toLocaleString()
+  };
+  localStorage.setItem("lastOrder", JSON.stringify(orderData));
+
+  if(amount=="100"){
+    alert(`Order Fully Paid for ${data.productName}\nTID: ${tid}\nThank you, ${data.name}!`);
+  } else {
+    alert(`COD Order Confirmed for ${data.productName}\n₹40 paid online (packing), ₹60 on delivery\nTID: ${tid}\nThank you, ${data.name}!`);
+  }
+
   localStorage.removeItem("checkoutData");
   window.location.href="index.html";
 }
