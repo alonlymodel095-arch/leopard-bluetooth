@@ -1,65 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Leopard Bluetooth Earbuds</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body{
-            font-family: Arial;
-            background:#f2f2f2;
-            margin:0;
-            padding:15px;
-        }
-        h2{text-align:center;}
-        .grid{
-            display:grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap:15px;
-            max-width:900px;
-            margin:auto;
-        }
-        .card{
-            background:white;
-            padding:10px;
-            border-radius:12px;
-            box-shadow:0 4px 10px rgba(0,0,0,0.1);
-        }
-        img{
-            width:100%;
-            border-radius:10px;
-        }
-        .price{color:green; font-size:16px; margin-top:6px;}
-        .packing{color:red; font-size:13px;}
-        .total{font-weight:bold; font-size:14px;}
-        button{
-            width:100%;
-            background:black;
-            color:white;
-            padding:8px;
-            border:none;
-            border-radius:8px;
-            font-size:14px;
-            margin-top:6px;
-            cursor:pointer;
-        }
-        @media(max-width:600px){.grid{grid-template-columns:1fr;}}
-    </style>
+<title>Leopard Bluetooth Earbuds</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Arial; background:#f2f2f2; margin:0; padding:15px;}
+h2{text-align:center;}
+.grid{
+    display:grid; 
+    grid-template-columns: repeat(4, 1fr); /* 4 columns desktop */
+    gap:15px; 
+    max-width:1200px; 
+    margin:auto;
+}
+.card{background:white; padding:10px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+img{width:100%; border-radius:10px;}
+.price{color:green; font-size:16px; margin-top:6px;}
+.packing{color:red; font-size:13px;}
+.total{font-weight:bold; font-size:14px;}
+button{width:100%; background:black; color:white; padding:8px; border:none; border-radius:8px; font-size:14px; margin-top:6px; cursor:pointer;}
+
+/* Responsive */
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}} /* Mobile/tablet 2 columns */
+@media(max-width:400px){.grid{grid-template-columns:1fr;}} /* Extra small phones 1 column */
+</style>
 </head>
 <body>
 <h2>Leopard Bluetooth Earbuds</h2>
 <div class="grid">
 <script>
-const cashFreeLink = "https://sandbox.cashfree.com/pg/checkout/order/test"; // Replace with real Cash Free link
-for(let i=12;i<=41;i++){
+for(let i=1;i<=30;i++){
 document.write(`
 <div class="card">
-    <img src="images (${i}).jpeg">
+    <img src="images (${i}).jpeg" alt="Product ${i}">
     <div class="price">₹100</div>
     <div class="packing">+ ₹40 Packing (Online Mandatory)</div>
-    <div class="total">Total Payable: ₹140</div>
-    <button onclick="window.open('${cashFreeLink}','_blank'); window.location.href='checkout.html'">Buy Now</button>
+    <div class="total">Total: ₹140</div>
+    <button onclick="buyNow()">Buy Now</button>
 </div>
 `);
+}
+
+function buyNow(){
+    const appId = localStorage.getItem("cashfreeAppId");
+    const secret = localStorage.getItem("cashfreeSecret");
+    if(appId && secret){
+        // Replace below URL with your CashFree checkout page using App ID
+        const cashfreeURL = "https://sandbox.cashfree.com/pg/checkout/order?appId=" + appId;
+        window.open(cashfreeURL,'_blank');
+        window.location.href='checkout.html';
+    } else{
+        alert("CashFree App ID / Secret Key not set. Please ask Admin.");
+    }
 }
 </script>
 </div>
