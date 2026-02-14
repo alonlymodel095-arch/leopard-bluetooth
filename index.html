@@ -2,59 +2,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Leopard Bluetooth Store</title>
+  <title>Leopard Bluetooth</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
-    body {
+    body{
+      margin:0;
       font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      margin: 0;
-      padding: 0;
-      text-align: center;
+      background:#f2f2f2;
+      text-align:center;
     }
-
-    .container {
-      padding: 20px;
+    .container{
+      padding:20px;
     }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 350px;
-      margin: auto;
+    img{
+      width:90%;
+      max-width:350px;
+      border-radius:12px;
+      margin-top:20px;
     }
-
-    img {
-      width: 100%;
-      border-radius: 10px;
+    h1{
+      margin-top:20px;
     }
-
-    h1 {
-      margin-top: 10px;
+    .price{
+      font-size:22px;
+      color:green;
+      margin:10px 0;
     }
-
-    .price {
-      font-size: 20px;
-      color: green;
-      font-weight: bold;
+    button{
+      background:black;
+      color:white;
+      padding:12px 25px;
+      border:none;
+      border-radius:8px;
+      font-size:16px;
+      margin-top:15px;
     }
-
-    .btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 12px 25px;
-      background: black;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 16px;
+    .box{
+      background:white;
+      padding:20px;
+      border-radius:12px;
+      max-width:350px;
+      margin:20px auto;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
     }
-
-    .btn:hover {
-      background: #333;
+    input{
+      width:90%;
+      padding:10px;
+      margin:8px 0;
+      border-radius:6px;
+      border:1px solid #ccc;
     }
   </style>
 </head>
@@ -62,18 +58,34 @@
 <body>
 
 <div class="container">
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad" alt="Bluetooth">
+  <h1>Leopard Bluetooth Earbuds</h1>
+  
+  <!-- Image (make sure earbuds.jpg is uploaded in repo) -->
+  <img src="earbuds.jpg" alt="Bluetooth Earbuds">
 
-    <h1>Leopard Bluetooth Earbuds</h1>
+  <div class="price">₹999 Only</div>
 
-    <p>High Bass | Long Battery | Touch Control</p>
+  <button onclick="showCheckout()">Buy Now</button>
+</div>
 
-    <div class="price">₹999</div>
-
-    <a href="checkout.html" class="btn">Buy Now</a>
+<div id="checkout" style="display:none;">
+  <div class="box">
+    <h2>Checkout</h2>
+    <input type="text" placeholder="Full Name"><br>
+    <input type="text" placeholder="Address"><br>
+    <input type="tel" placeholder="Mobile Number"><br>
+    <button onclick="alert('Order Placed Successfully!')">
+      Place Order
+    </button>
   </div>
 </div>
+
+<script>
+function showCheckout(){
+  document.getElementById("checkout").style.display = "block";
+  window.scrollTo(0,document.body.scrollHeight);
+}
+</script>
 
 </body>
 </html>
