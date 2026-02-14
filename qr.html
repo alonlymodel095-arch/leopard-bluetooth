@@ -24,13 +24,13 @@ button:hover{background:#222;}
 
 <script>
 // Get product info from checkout
-const data=JSON.parse(localStorage.getItem("checkoutData"));
+const data=JSON.parse(localStorage.getItem("checkoutData") || '{}');
 
-// Use safe QR file name
+// QR image path
 const qrImage="images/qr.png"; // Make sure file exists in images/ folder
 
 const qrDiv=document.getElementById("qrContainer");
-qrDiv.innerHTML=`<p style="font-weight:bold;">Pay for ${data.productName}</p>
+qrDiv.innerHTML=`<p style="font-weight:bold;">Pay for ${data.productName || 'your product'}</p>
 <img src="${qrImage}" alt="UPI QR" onerror="this.onerror=null;this.src='images/qr.png';">
 <p style="font-weight:bold; color:#333; margin-top:15px;">Payment Options:</p>
 <ul>
@@ -47,8 +47,8 @@ function confirmOrder(){
 
   // Save order info
   const orderData = {
-    productName:data.productName,
-    name:data.name,
+    productName:data.productName || 'your product',
+    name:data.name || 'Customer',
     tid:tid,
     paidAmount:amount,
     date:new Date().toLocaleString()
@@ -56,9 +56,9 @@ function confirmOrder(){
   localStorage.setItem("lastOrder", JSON.stringify(orderData));
 
   if(amount=="100"){
-    alert(`Order Fully Paid for ${data.productName}\nTID: ${tid}\nThank you, ${data.name}!`);
+    alert(`Order Fully Paid for ${orderData.productName}\nTID: ${tid}\nThank you, ${orderData.name}!`);
   } else {
-    alert(`COD Order Confirmed for ${data.productName}\n₹40 paid online (packing), ₹60 on delivery\nTID: ${tid}\nThank you, ${data.name}!`);
+    alert(`COD Order Confirmed for ${orderData.productName}\n₹40 paid online (packing), ₹60 on delivery\nTID: ${tid}\nThank you, ${orderData.name}!`);
   }
 
   localStorage.removeItem("checkoutData");
