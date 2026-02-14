@@ -32,23 +32,29 @@ button{
     cursor:pointer;
     margin-top:20px;
 }
+.reminder{
+    color:red;
+    font-size:14px;
+    margin-top:10px;
+    text-align:center;
+}
 </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Checkout</h2>
-    <div class="detail">Product Price: ₹100</div>
-    <div class="detail">Packing Charges (Paid Online): ₹40</div>
+    <div class="detail">Packing Charges Paid Online (QR): ₹40</div>
+    <div class="detail">Product Price (Cash on Delivery): ₹100</div>
     <div class="total">Total COD Amount: ₹100</div>
+    <div class="reminder">Scan QR for ₹40 Online Payment before confirming order</div>
     <button onclick="confirmOrder()">Confirm Order (COD)</button>
 </div>
 
 <script>
 function confirmOrder(){
     alert("✅ Order Confirmed! Pay ₹100 on Delivery.");
-    // Optional: redirect to thank you or home page
-    window.location.href = "index.html";
+    window.location.href = "index.html"; // Redirect back to products page
 }
 </script>
 
