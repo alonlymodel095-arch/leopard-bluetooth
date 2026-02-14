@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body{font-family:Arial; background:#f2f2f2; margin:0; padding:15px;}
-h2{text-align:center;}
+h2{text-align:center; margin-bottom:20px;}
 .grid{
     display:grid; 
     grid-template-columns: repeat(4, 1fr); /* 4 columns desktop */
@@ -13,16 +13,26 @@ h2{text-align:center;}
     max-width:1200px; 
     margin:auto;
 }
-.card{background:white; padding:10px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+.card{background:white; padding:10px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); text-align:center;}
 img{width:100%; border-radius:10px;}
 .price{color:green; font-size:16px; margin-top:6px;}
 .packing{color:red; font-size:13px;}
 .total{font-weight:bold; font-size:14px;}
-button{width:100%; background:black; color:white; padding:8px; border:none; border-radius:8px; font-size:14px; margin-top:6px; cursor:pointer;}
+button{
+    width:100%;
+    background:black;
+    color:white;
+    padding:8px;
+    border:none;
+    border-radius:8px;
+    font-size:14px;
+    margin-top:6px;
+    cursor:pointer;
+}
 
 /* Responsive */
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}} /* Tablet/mobile 2 columns */
-@media(max-width:400px){.grid{grid-template-columns:1fr;}} /* Extra small phones 1 column */
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}} 
+@media(max-width:400px){.grid{grid-template-columns:1fr;}} 
 </style>
 </head>
 <body>
@@ -30,29 +40,27 @@ button{width:100%; background:black; color:white; padding:8px; border:none; bord
 <h2>Leopard Bluetooth Earbuds</h2>
 <div class="grid">
 <script>
-// Hardcoded CashFree App ID & Secret Key
-const CASHFREE_APP_ID = "1121994065eee17fafcafc014a94991211";
-const CASHFREE_SECRET = "cfsk_ma_prod_32d9d1b5bcb3b8e67bc8ccd24497f91e_f6f767a0";
+// QR Image File
+const qrImage = "images/IMG_20260214_075835_541.png"; // Tumhara QR file
 
 for(let i=1;i<=30;i++){
 document.write(`
 <div class="card">
     <img src="images (${i}).jpeg" alt="Product ${i}">
     <div class="price">₹100</div>
-    <div class="packing">+ ₹40 Packing (Online Mandatory)</div>
+    <div class="packing">+ ₹40 (Scan QR to pay online)</div>
     <div class="total">Total: ₹140</div>
-    <button onclick="buyNow()">Buy Now</button>
+    <img src="${qrImage}" alt="Pay QR" style="margin-top:8px; width:80%;">
+    <button onclick="goCheckout()">Confirm Order</button>
 </div>
 `);
 }
 
-function buyNow(){
-    // CashFree link using hardcoded App ID
-    const cashfreeURL = "https://sandbox.cashfree.com/pg/checkout/order?appId=" + CASHFREE_APP_ID;
-    window.open(cashfreeURL,'_blank'); // Payment page
-    window.location.href='checkout.html'; // Redirect to checkout page
+function goCheckout(){
+    window.location.href='checkout.html'; // Redirect to COD page
 }
 </script>
 </div>
+
 </body>
 </html>
