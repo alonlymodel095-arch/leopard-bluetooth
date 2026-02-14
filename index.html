@@ -3,52 +3,47 @@
 <head>
     <title>Leopard Bluetooth Earbuds</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <style>
         body {
             font-family: Arial, sans-serif;
+            background: #f2f2f2;
             text-align: center;
-            background-color: #f2f2f2;
             margin: 0;
-            padding: 30px 15px;
+            padding: 20px;
         }
 
         .card {
             background: white;
-            padding: 25px;
+            padding: 20px;
             border-radius: 12px;
-            max-width: 350px;
+            max-width: 360px;
             margin: auto;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        h1 {
-            font-size: 24px;
+        .slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
         }
 
-        img {
+        .slider img {
             width: 100%;
+            flex: 0 0 100%;
+            scroll-snap-align: start;
             border-radius: 10px;
-            margin: 15px 0;
+            margin-right: 10px;
         }
 
-        .price {
-            color: green;
-            font-size: 22px;
-            margin: 8px 0;
+        .slider::-webkit-scrollbar {
+            display: none;
         }
 
-        .packing {
-            color: red;
-            font-size: 16px;
-            margin: 5px 0;
-        }
-
-        .total {
-            font-size: 20px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
+        .price { color: green; font-size: 20px; margin-top: 10px; }
+        .packing { color: red; font-size: 14px; }
+        .total { font-weight: bold; margin: 10px 0; }
 
         button {
             background: black;
@@ -57,12 +52,8 @@
             border: none;
             border-radius: 8px;
             font-size: 16px;
-            cursor: pointer;
             margin-top: 10px;
-        }
-
-        button:hover {
-            background: #333;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -71,14 +62,44 @@
 
 <div class="card">
 
-    <h1>Leopard Bluetooth Earbuds</h1>
+    <h2>Leopard Bluetooth Earbuds</h2>
 
-    <img src="images (12).jpeg" alt="Bluetooth Earbuds">
+    <div class="slider">
+        <!-- Images 12 to 41 -->
+        <img src="images (12).jpeg">
+        <img src="images (13).jpeg">
+        <img src="images (14).jpeg">
+        <img src="images (15).jpeg">
+        <img src="images (16).jpeg">
+        <img src="images (17).jpeg">
+        <img src="images (18).jpeg">
+        <img src="images (19).jpeg">
+        <img src="images (20).jpeg">
+        <img src="images (21).jpeg">
+        <img src="images (22).jpeg">
+        <img src="images (23).jpeg">
+        <img src="images (24).jpeg">
+        <img src="images (25).jpeg">
+        <img src="images (26).jpeg">
+        <img src="images (27).jpeg">
+        <img src="images (28).jpeg">
+        <img src="images (29).jpeg">
+        <img src="images (30).jpeg">
+        <img src="images (31).jpeg">
+        <img src="images (32).jpeg">
+        <img src="images (33).jpeg">
+        <img src="images (34).jpeg">
+        <img src="images (35).jpeg">
+        <img src="images (36).jpeg">
+        <img src="images (37).jpeg">
+        <img src="images (38).jpeg">
+        <img src="images (39).jpeg">
+        <img src="images (40).jpeg">
+        <img src="images (41).jpeg">
+    </div>
 
     <div class="price">Product Price: ₹100</div>
-
     <div class="packing">Packing Charge (Online Compulsory): ₹40</div>
-
     <div class="total">Total Payable: ₹140</div>
 
     <button onclick="window.location.href='checkout.html'">
