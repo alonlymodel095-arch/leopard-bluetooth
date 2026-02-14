@@ -4,90 +4,63 @@
 <title>Checkout</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{font-family:Arial, sans-serif; background:#f2f2f2; padding:0; margin:0;}
-.container{max-width:500px; margin:30px auto; background:white; padding:20px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.2);}
+body{font-family:Arial,sans-serif;background:#f2f2f2;padding:0;margin:0;}
+.container{max-width:500px;margin:30px auto;background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.2);}
 h2{text-align:center;}
-label{display:block; margin-top:10px;}
-input, select{width:100%; padding:10px; margin-top:5px; border-radius:8px; border:1px solid #ccc;}
-button{margin-top:15px; width:100%; padding:10px; background:#000; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer;}
+label{display:block;margin-top:10px;}
+input,select{width:100%;padding:10px;margin-top:5px;border-radius:8px;border:1px solid #ccc;}
+button{margin-top:15px;width:100%;padding:10px;background:#000;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;}
 button:hover{background:#222;}
-.product-img{width:100%; max-width:200px; display:block; margin:10px auto; border-radius:12px;}
+.product-img{width:100%;max-width:200px;display:block;margin:10px auto;border-radius:12px;}
 </style>
 </head>
 <body>
-
 <div class="container">
 <h2>Checkout</h2>
-
 <img id="productImg" class="product-img" src="" alt="Product">
-<p id="productName" style="text-align:center; font-weight:bold;"></p>
+<p id="productName" style="text-align:center;font-weight:bold;"></p>
 
-<label>Name</label>
-<input type="text" id="name" required>
-
-<label>Phone</label>
-<input type="text" id="phone" required placeholder="10 digits">
-
-<label>Email</label>
-<input type="email" id="email" required>
-
-<label>Address</label>
-<input type="text" id="address" required>
-
-<label>Pincode</label>
-<input type="text" id="pincode" required placeholder="6 digits">
-
-<label>State</label>
-<input type="text" id="state" value="Maharashtra" required>
-
+<label>Name</label><input type="text" id="name" required>
+<label>Phone</label><input type="text" id="phone" required placeholder="10 digits">
+<label>Email</label><input type="email" id="email" required>
+<label>Address</label><input type="text" id="address" required>
+<label>Pincode</label><input type="text" id="pincode" required placeholder="6 digits">
+<label>State</label><input type="text" id="state" value="Maharashtra" required>
 <label>Payment Type</label>
 <select id="payment">
-  <option value="online">Online ₹40 (Compulsory)</option>
-  <option value="cod">COD ₹60</option>
+<option value="online">Online ₹40 (Compulsory)</option>
+<option value="cod">COD ₹60</option>
 </select>
 
 <button onclick="proceedToQR()">Proceed to Pay</button>
 </div>
 
 <script>
-// Product info from localStorage
-// Replace with dynamic assignment if needed
-localStorage.setItem("checkoutData", JSON.stringify({
-    productImg: "images/bluetooth1.png",
-    productName: "Bluetooth 1"
-}));
-
-const data = JSON.parse(localStorage.getItem("checkoutData"));
-document.getElementById("productImg").src = data.productImg;
-document.getElementById("productName").innerText = data.productName;
+const data=JSON.parse(localStorage.getItem("checkoutData"));
+document.getElementById("productImg").src=data.productImg;
+document.getElementById("productName").innerText=data.productName;
 
 function proceedToQR(){
-    const name = document.getElementById("name").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const address = document.getElementById("address").value.trim();
-    const pincode = document.getElementById("pincode").value.trim();
-    const state = document.getElementById("state").value.trim();
-    const payment = document.getElementById("payment").value;
+  const name=document.getElementById("name").value.trim();
+  const phone=document.getElementById("phone").value.trim();
+  const email=document.getElementById("email").value.trim();
+  const address=document.getElementById("address").value.trim();
+  const pincode=document.getElementById("pincode").value.trim();
+  const state=document.getElementById("state").value.trim();
+  const payment=document.getElementById("payment").value;
 
-    if(!name || !phone || !email || !address || !pincode || !state){
-        alert("Please fill all fields");
-        return;
-    }
-    if(phone.length!==10 || isNaN(phone)){ alert("Enter valid 10 digit phone"); return; }
-    if(pincode.length!==6 || isNaN(pincode)){ alert("Enter valid 6 digit pincode"); return; }
+  if(!name||!phone||!email||!address||!pincode||!state){alert("Please fill all fields");return;}
+  if(phone.length!==10||isNaN(phone)){alert("Enter valid 10 digit phone");return;}
+  if(pincode.length!==6||isNaN(pincode)){alert("Enter valid 6 digit pincode");return;}
 
-    // Save details for qr.html
-    localStorage.setItem("checkoutData", JSON.stringify({
-        productImg: data.productImg,
-        productName: data.productName,
-        name, phone, email, address, pincode, state, payment
-    }));
-
-    // Redirect to QR page
-    window.location.href = "qr.html";
+  localStorage.setItem("checkoutData",JSON.stringify({
+      productImg:data.productImg,
+      productName:data.productName,
+      productIndex:data.productIndex,
+      name,phone,email,address,pincode,state,payment
+  }));
+  window.location.href="qr.html";
 }
 </script>
-
 </body>
 </html>
