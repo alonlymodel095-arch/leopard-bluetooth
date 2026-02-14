@@ -27,7 +27,7 @@ button:hover{background:#222;}
 const data=JSON.parse(localStorage.getItem("checkoutData"));
 
 // Use safe QR file name (rename if needed)
-const qrImage="images/upi_1771095824230~2.png"; // Make sure file exists in images/ folder
+const qrImage="images/qr.png"; // Make sure file exists in images/ folder
 
 const qrDiv=document.getElementById("qrContainer");
 qrDiv.innerHTML=`<p style="font-weight:bold;">Pay for ${data.productName}</p>
