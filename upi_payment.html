@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pay via UPI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Arial,sans-serif;background:#f2f2f2;text-align:center;padding:30px;}
+#container{background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.2);display:inline-block;}
+input{width:80%;padding:10px;margin-top:10px;border-radius:8px;border:1px solid #ccc;}
+button{margin-top:15px;padding:10px 20px;background:#000;color:white;border:none;border-radius:8px;cursor:pointer;}
+button:hover{background:#222;}
+ul{text-align:left; max-width:300px; margin:10px auto; color:#555;}
+</style>
+</head>
+<body>
+<h2>Enter Your UPI ID</h2>
+<div id="container">
+<p style="font-weight:bold;">Payment Instructions:</p>
+<ul>
+<li>Pay ₹100 → Full payment online</li>
+<li>Pay ₹40 → COD packing, remaining ₹60 on delivery</li>
+</ul>
+<input type="text" id="upi" placeholder="Ex: shivam@upi">
+<br>
+<button onclick="goToPayment()">Pay Now</button>
+</div>
+
+<script>
+function goToPayment(){
+  const upi=document.getElementById("upi").value.trim();
+  if(upi.length<3){ alert("Enter valid UPI ID"); return; }
+
+  // Save UPI ID temporarily
+  localStorage.setItem("userUPI", upi);
+
+  // Redirect to "Enter TID" page
+  window.location.href="enter_tid.html";
+}
+</script>
+</body>
+</html>
