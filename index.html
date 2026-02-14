@@ -8,7 +8,7 @@ body{font-family:Arial; background:#f2f2f2; margin:0; padding:15px;}
 h2{text-align:center; margin-bottom:20px;}
 .grid{
     display:grid; 
-    grid-template-columns: repeat(4, 1fr); /* 4 columns desktop */
+    grid-template-columns: repeat(4, 1fr); 
     gap:15px; 
     max-width:1200px; 
     margin:auto;
@@ -16,8 +16,6 @@ h2{text-align:center; margin-bottom:20px;}
 .card{background:white; padding:10px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); text-align:center;}
 img{width:100%; border-radius:10px;}
 .price{color:green; font-size:16px; margin-top:6px;}
-.packing{color:red; font-size:13px;}
-.total{font-weight:bold; font-size:14px;}
 button{
     width:100%;
     background:black;
@@ -40,24 +38,21 @@ button{
 <h2>Leopard Bluetooth Earbuds</h2>
 <div class="grid">
 <script>
-// QR Image File
-const qrImage = "images/IMG_20260214_075835_541.png"; // Tumhara QR file
-
+// Loop 30 products
 for(let i=1;i<=30;i++){
 document.write(`
 <div class="card">
     <img src="images (${i}).jpeg" alt="Product ${i}">
     <div class="price">₹100</div>
-    <div class="packing">+ ₹40 (Scan QR to pay online)</div>
-    <div class="total">Total: ₹140</div>
-    <img src="${qrImage}" alt="Pay QR" style="margin-top:8px; width:80%;">
-    <button onclick="goCheckout()">Confirm Order</button>
+    <button onclick="buyNow(${i})">Buy Now</button>
 </div>
 `);
 }
 
-function goCheckout(){
-    window.location.href='checkout.html'; // Redirect to COD page
+// Buy Now click
+function buyNow(productId){
+    // Pass productId to checkout via query param
+    window.location.href = "checkout.html?product=" + productId;
 }
 </script>
 </div>
