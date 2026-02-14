@@ -22,10 +22,7 @@ button:hover{background:#222;}
 
 <script>
 const data=JSON.parse(localStorage.getItem("checkoutData"));
-// Map productIndex to QR image (1-31)
-let qrIndex=data.productIndex; // example: product1 → qr1.png
-if(qrIndex>31) qrIndex=31; // max 31 images
-const qrImage=`images/qr${qrIndex}.png`;
+const qrImage="images/upi_1771095824230~2.png"; // Fixed QR
 
 const qrDiv=document.getElementById("qrContainer");
 qrDiv.innerHTML=`<p>Pay ₹40 for ${data.productName}</p>
