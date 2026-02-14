@@ -8,31 +8,23 @@ body{font-family:Arial; background:#f2f2f2; padding:20px; margin:0;}
 .box{background:white; padding:20px; border-radius:12px; max-width:400px; margin:auto; box-shadow:0 4px 12px rgba(0,0,0,0.1);}
 h2{text-align:center;}
 button{width:100%; padding:12px; background:black; color:white; border:none; border-radius:8px; font-size:16px; margin-top:10px; cursor:pointer;}
-#orderBtn{display:block;}
 .success{display:none; text-align:center; color:green; font-weight:bold; margin-top:15px;}
-input{width:100%; padding:10px; margin-top:8px; border-radius:6px; border:1px solid #ccc;}
 </style>
 </head>
 <body>
 <div class="box">
-<h2>Secure Checkout</h2>
+<h2>Order Confirmation</h2>
 <p>Product Price: ₹100</p>
-<p>Packing Charge (Online Mandatory): ₹40</p>
-<p><b>Total Pay Now: ₹40</b></p>
-<p><b>COD Amount: ₹100</b></p>
-<input type="text" id="txn" placeholder="Enter Transaction ID from Cash Free">
-<button id="orderBtn" onclick="confirmOrder()">Confirm Order</button>
+<p>Packing Charge (Paid Online): ₹40</p>
+<p><b>Total Pay on Delivery: ₹100</b></p>
+
+<button onclick="confirmOrder()">Confirm Order</button>
 <div class="success" id="successMsg">✅ Order Confirmed! Pay ₹100 on Delivery.</div>
 </div>
+
 <script>
 function confirmOrder(){
-    let txn = document.getElementById("txn").value.trim();
-    if(txn.length >=5){
-        document.getElementById("successMsg").style.display="block";
-        document.getElementById("orderBtn").disabled=true;
-    }else{
-        alert("Enter valid Transaction ID");
-    }
+    document.getElementById("successMsg").style.display="block";
 }
 </script>
 </body>
