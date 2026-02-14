@@ -1,11 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel</title>
+<title>Admin - Leopard Bluetooth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Arial; padding:20px;}
+input{width:100%; padding:10px; margin:8px 0; border-radius:6px; border:1px solid #ccc;}
+button{width:100%; padding:12px; background:black; color:white; border:none; border-radius:8px; cursor:pointer;}
+h2{text-align:center;}
+label{font-weight:bold;}
+</style>
 </head>
 <body>
-  <h2>Admin Login</h2>
-  <p>Username: admin</p>
-  <p>Password: admin123</p>
+<h2>Admin Panel</h2>
+
+<label>CashFree App ID:</label>
+<input type="text" id="cashfreeAppId" placeholder="Enter CashFree App ID">
+
+<label>CashFree Secret Key:</label>
+<input type="text" id="cashfreeSecret" placeholder="Enter CashFree Secret Key">
+
+<button onclick="saveAdmin()">Save Settings</button>
+
+<script>
+function saveAdmin(){
+    const appId = document.getElementById("cashfreeAppId").value.trim();
+    const secret = document.getElementById("cashfreeSecret").value.trim();
+
+    if(appId.length>0 && secret.length>0){
+        localStorage.setItem("cashfreeAppId", appId);
+        localStorage.setItem("cashfreeSecret", secret);
+        alert("CashFree App ID & Secret Key saved!");
+    } else{
+        alert("Please enter both App ID and Secret Key");
+    }
+}
+</script>
 </body>
 </html>
