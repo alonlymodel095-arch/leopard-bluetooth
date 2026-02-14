@@ -21,14 +21,19 @@ img{width:100%; border-radius:10px;}
 button{width:100%; background:black; color:white; padding:8px; border:none; border-radius:8px; font-size:14px; margin-top:6px; cursor:pointer;}
 
 /* Responsive */
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}} /* Mobile/tablet 2 columns */
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);}} /* Tablet/mobile 2 columns */
 @media(max-width:400px){.grid{grid-template-columns:1fr;}} /* Extra small phones 1 column */
 </style>
 </head>
 <body>
+
 <h2>Leopard Bluetooth Earbuds</h2>
 <div class="grid">
 <script>
+// Hardcoded CashFree App ID & Secret Key
+const CASHFREE_APP_ID = "1121994065eee17fafcafc014a94991211";
+const CASHFREE_SECRET = "cfsk_ma_prod_32d9d1b5bcb3b8e67bc8ccd24497f91e_f6f767a0";
+
 for(let i=1;i<=30;i++){
 document.write(`
 <div class="card">
@@ -42,16 +47,10 @@ document.write(`
 }
 
 function buyNow(){
-    const appId = localStorage.getItem("cashfreeAppId");
-    const secret = localStorage.getItem("cashfreeSecret");
-    if(appId && secret){
-        // Replace below URL with your CashFree checkout page using App ID
-        const cashfreeURL = "https://sandbox.cashfree.com/pg/checkout/order?appId=" + appId;
-        window.open(cashfreeURL,'_blank');
-        window.location.href='checkout.html';
-    } else{
-        alert("CashFree App ID / Secret Key not set. Please ask Admin.");
-    }
+    // CashFree link using hardcoded App ID
+    const cashfreeURL = "https://sandbox.cashfree.com/pg/checkout/order?appId=" + CASHFREE_APP_ID;
+    window.open(cashfreeURL,'_blank'); // Payment page
+    window.location.href='checkout.html'; // Redirect to checkout page
 }
 </script>
 </div>
