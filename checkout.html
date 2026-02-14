@@ -1,105 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Secure Checkout</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
-            padding: 20px;
-            margin: 0;
-        }
-
-        .box {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            max-width: 380px;
-            margin: auto;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            text-align: center;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-
-        .price-box {
-            background: #f9f9f9;
-            padding: 10px;
-            border-radius: 8px;
-            margin: 10px 0;
-        }
-
-        .total {
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        button {
-            width: 100%;
-            background: black;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        .success {
-            display: none;
-            text-align: center;
-            color: green;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-    </style>
+<title>Checkout - Leopard Bluetooth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Arial; background:#f2f2f2; padding:20px; margin:0;}
+.box{background:white; padding:20px; border-radius:12px; max-width:400px; margin:auto; box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+h2{text-align:center;}
+button{width:100%; padding:12px; background:black; color:white; border:none; border-radius:8px; font-size:16px; margin-top:10px; cursor:pointer;}
+#orderBtn{display:block;}
+.success{display:none; text-align:center; color:green; font-weight:bold; margin-top:15px;}
+input{width:100%; padding:10px; margin-top:8px; border-radius:6px; border:1px solid #ccc;}
+</style>
 </head>
-
 <body>
-
 <div class="box">
-
-    <h2>Secure Checkout</h2>
-
-    <div class="price-box">
-        <p>Product Price: ₹100</p>
-        <p>Packing Charge: ₹40</p>
-        <p class="total">Total Payable: ₹140</p>
-    </div>
-
-    <form onsubmit="placeOrder(event)">
-        <input type="text" placeholder="Full Name" required>
-        <textarea placeholder="Full Address" required></textarea>
-        <input type="tel" placeholder="Mobile Number" required>
-
-        <button type="submit">Place Order</button>
-    </form>
-
-    <div class="success" id="successMsg">
-        ✅ Order Placed Successfully!
-    </div>
-
+<h2>Secure Checkout</h2>
+<p>Product Price: ₹100</p>
+<p>Packing Charge (Online Mandatory): ₹40</p>
+<p><b>Total Pay Now: ₹40</b></p>
+<p><b>COD Amount: ₹100</b></p>
+<input type="text" id="txn" placeholder="Enter Transaction ID from Cash Free">
+<button id="orderBtn" onclick="confirmOrder()">Confirm Order</button>
+<div class="success" id="successMsg">✅ Order Confirmed! Pay ₹100 on Delivery.</div>
 </div>
-
 <script>
-function placeOrder(event){
-    event.preventDefault();
-    document.getElementById("successMsg").style.display = "block";
+function confirmOrder(){
+    let txn = document.getElementById("txn").value.trim();
+    if(txn.length >=5){
+        document.getElementById("successMsg").style.display="block";
+        document.getElementById("orderBtn").disabled=true;
+    }else{
+        alert("Enter valid Transaction ID");
+    }
 }
 </script>
-
 </body>
 </html>
