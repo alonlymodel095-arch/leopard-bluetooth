@@ -1,66 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Checkout</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body{font-family:Arial,sans-serif;background:#f2f2f2;padding:0;margin:0;}
-.container{max-width:500px;margin:30px auto;background:white;padding:20px;border-radius:12px;box-shadow:0 5px 15px rgba(0,0,0,0.2);}
-h2{text-align:center;}
-label{display:block;margin-top:10px;}
-input,select{width:100%;padding:10px;margin-top:5px;border-radius:8px;border:1px solid #ccc;}
-button{margin-top:15px;width:100%;padding:10px;background:#000;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;}
-button:hover{background:#222;}
-.product-img{width:100%;max-width:200px;display:block;margin:10px auto;border-radius:12px;}
-</style>
+  <title>Checkout</title>
+  <style>
+    body{font-family:Arial; background:#111; color:#fff; padding:20px;}
+    h2{text-align:center;}
+    .cart-item{background:#222; padding:15px; margin:10px 0; border-radius:10px; display:flex; align-items:center;}
+    .cart-item img{width:100px; border-radius:10px; margin-right:15px;}
+    button{padding:8px 15px; margin-left:auto; border:none; border-radius:8px; cursor:pointer; background:#f4c542; color:#000; transition:0.3s;}
+    button:hover{background:#e0b72f;}
+    .checkout{display:block; margin:20px auto; padding:12px 30px; background:#4caf50; color:#fff; border:none; border-radius:10px; cursor:pointer;}
+    .checkout:hover{background:#45a049;}
+    .total{text-align:right; font-size:20px; margin-top:10px;}
+  </style>
 </head>
 <body>
-<div class="container">
-<h2>Checkout</h2>
-<img id="productImg" class="product-img" src="" alt="Product">
-<p id="productName" style="text-align:center;font-weight:bold;"></p>
 
-<label>Name</label><input type="text" id="name" required>
-<label>Phone</label><input type="text" id="phone" required placeholder="10 digits">
-<label>Email</label><input type="email" id="email" required>
-<label>Address</label><input type="text" id="address" required>
-<label>Pincode</label><input type="text" id="pincode" required placeholder="6 digits">
-<label>State</label><input type="text" id="state" value="Maharashtra" required>
-<label>Payment Type</label>
-<select id="payment">
-<option value="online">Online ₹39 (Compulsory)</option>
-<option value="cod">COD ₹19</option>
-</select>
-
-<button onclick="proceedToQR()">Proceed to Pay</button>
-</div>
+<h2>Your Cart</h2>
+<div id="cartList"></div>
+<div class="total" id="totalPrice"></div>
+<button class="checkout" onclick="checkout()">Proceed to Payment</button>
 
 <script>
-const data=JSON.parse(localStorage.getItem("checkoutData"));
-document.getElementById("productImg").src=data.productImg;
-document.getElementById("productName").innerText=data.productName;
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+const buyNow=JSON.parse(localStorage.getItem("buyNow"))||[];
+if(buyNow.length>0) cart=buyNow;
 
-function proceedToQR(){
-  const name=document.getElementById("name").value.trim();
-  const phone=document.getElementById("phone").value.trim();
-  const email=document.getElementById("email").value.trim();
-  const address=document.getElementById("address").value.trim();
-  const pincode=document.getElementById("pincode").value.trim();
-  const state=document.getElementById("state").value.trim();
-  const payment=document.getElementById("payment").value;
+const cartList=document.getElementById("cartList");
+let total=0;
 
-  if(!name||!phone||!email||!address||!pincode||!state){alert("Please fill all fields");return;}
-  if(phone.length!==10||isNaN(phone)){alert("Enter valid 10 digit phone");return;}
-  if(pincode.length!==6||isNaN(pincode)){alert("Enter valid 6 digit pincode");return;}
+cart.forEach((p,i)=>{
+  total+=p.price;
+  const div=document.createElement("div");
+  div.className="cart-item";
+  div.innerHTML=`<img src="${p.image}" alt="${p.name}"><div><h4>${p.name}</h4><p>₹${p.price}</p></div><button onclick="remove(${i})">Remove</button>`;
+  cartList.appendChild(div);
+});
 
-  localStorage.setItem("checkoutData",JSON.stringify({
-      productImg:data.productImg,
-      productName:data.productName,
-      productIndex:data.productIndex,
-      name,phone,email,address,pincode,state,payment
-  }));
-  window.location.href="qr.html";
+document.getElementById("totalPrice").innerText=`Total: ₹${total}`;
+
+function remove(i){
+  cart.splice(i,1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  location.reload();
+}
+
+function checkout(){
+  if(cart.length===0){ alert("Cart is empty!"); return; }
+  localStorage.setItem("buyNow", JSON.stringify(cart));
+  window.location.href="payment.html";
 }
 </script>
+
 </body>
 </html>
